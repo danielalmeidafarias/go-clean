@@ -12,6 +12,6 @@ type TaskRepository interface {
 	GetOneByID(ctx context.Context, id string) (*domain.Task, *errors.Error)
 	GetAll(ctx context.Context) ([]*domain.Task, *errors.Error)
 	GetByUser(ctx context.Context, userID string) ([]*domain.Task, *errors.Error)
-	Update(ctx context.Context, name, description, userID *string, done *bool) *errors.Error
+	Update(ctx context.Context, id string, name, description, userID *string, done *bool) *errors.Error
 	Delete(ctx context.Context, id string) *errors.Error
 }

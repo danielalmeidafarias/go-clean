@@ -43,7 +43,7 @@ func (uc *ChangeOwnerUseCase) Exec(ctx context.Context, taskID string, userID st
 		return errors.InternalError().WithContext(errCtx)
 	}
 
-	err = uc.taskRepository.Update(ctx, nil, nil, &userID, nil)
+	err = uc.taskRepository.Update(ctx, taskID, nil, nil, &userID, nil)
 	if err != nil {
 		return errors.InternalError().WithContext(errCtx)
 	}

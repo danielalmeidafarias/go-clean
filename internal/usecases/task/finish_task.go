@@ -36,7 +36,7 @@ func (uc *FinishTaskUseCse) Exec(ctx context.Context, taskID string, userID stri
 	}
 
 	done := true
-	err = uc.taskRepository.Update(ctx, nil, nil, nil, &done)
+	err = uc.taskRepository.Update(ctx, taskID, nil, nil, nil, &done)
 	if err != nil {
 		return errors.InternalError().WithContext(errCtx)
 	}
