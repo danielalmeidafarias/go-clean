@@ -17,6 +17,17 @@ type Error struct {
 	Code    ErrorStatus
 }
 
+func (e *Error) Error() string {
+	return e.Message
+}
+
+func (e *Error) WithContext(context string) *Error {
+	return &Error{
+		Message: fmt.Sprintf("%s: %s", context, e.Message),
+		Code:    e.Code,
+	}
+}
+
 func NewError(message string, code ErrorStatus) *Error {
 	return &Error{
 		Message: message,
@@ -31,13 +42,9 @@ func FromError(err error, code ErrorStatus) *Error {
 	}
 }
 
-func (e *Error) Error() string {
-	return e.Message
-}
-
-func (e *Error) WithContext(context string) *Error {
+func InternalError() *Error {
 	return &Error{
-		Message: fmt.Sprintf("%s: %s", context, e.Message),
-		Code:    e.Code,
+		Message: "an internal error has occurred",
+		Code:    Internal,
 	}
 }
