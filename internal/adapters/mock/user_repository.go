@@ -5,6 +5,7 @@ import (
 
 	"github.com/danielalmeidafarias/go-clean/internal/domain"
 	"github.com/danielalmeidafarias/go-clean/internal/errors"
+	"github.com/google/uuid"
 )
 
 type UserRepository struct {
@@ -61,7 +62,7 @@ func (r *UserRepository) Create(ctx context.Context, name, email string) (*domai
 	}
 
 	newUser := &domain.User{
-		Id:    "8d38b17f-8460-4c2c-bed7-12ad6ec88538",
+		Id:    uuid.New().String(),
 		Name:  name,
 		Email: email,
 		Tasks: nil,
