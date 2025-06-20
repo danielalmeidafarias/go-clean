@@ -16,8 +16,16 @@ func (uc *DeleteUserUseCase) Exec(ctx context.Context, id string) *errors.Error 
 
 	_, err := uc.userRepository.GetOneByID(ctx, id)
 	if err != nil {
-		return err.WithContext(errCtx)
+		if err.Code == errors.NotFound {
+			return errors.NewError("user not found", errors.NotFound).WithContext(errCtx)
+		}
+		return errors.InternalError().WithContext(errCtx)
 	}
 
-	return uc.userRepository.Delete(ctx, id)
+	err = uc.userRepository.Delete(ctx, id)
+	if err != nil {
+		return errors.InternalError().WithContext(errCtx)
+	}
+
+	return nil
 }

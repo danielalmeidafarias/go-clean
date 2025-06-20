@@ -32,7 +32,7 @@ func (uc *CreateUserUseCase) Exec(ctx context.Context, name, email string) (*dom
 
 	user, err := uc.userRepository.Create(ctx, name, email)
 	if err != nil {
-		return nil, err.WithContext(errCtx)
+		return nil, errors.InternalError().WithContext(errCtx)
 	}
 
 	return user, nil
