@@ -13,5 +13,16 @@ type GetUserUseCase struct {
 }
 
 func (uc *GetUserUseCase) Exec(ctx context.Context, id string) (*domain.User, *errors.Error) {
-	return uc.userRepository.GetOneById(ctx, id)
+	errCtx := "error getting the user"
+
+	user, err := uc.userRepository.GetOneByID(ctx, id)
+	if err != nil {
+		if err.Code == errors.NotFound {
+			return nil, errors.NewError("user not found", errors.NotFound).WithContext(errCtx)
+		}
+
+		return nil, errors.InternalError().WithContext(errCtx)
+	}
+
+	return user, nil
 }
