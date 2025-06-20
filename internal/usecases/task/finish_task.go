@@ -19,7 +19,7 @@ func NewFinishTaskUseCse(
 	}
 }
 
-func (uc *FinishTaskUseCse) Exec(ctx context.Context, taskID string, userID string) *errors.Error {
+func (uc *FinishTaskUseCse) Exec(ctx context.Context, taskID string) *errors.Error {
 	errCtx := "error finishing the task owner"
 
 	task, err := uc.taskRepository.GetOneByID(ctx, taskID)

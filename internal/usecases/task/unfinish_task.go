@@ -19,7 +19,7 @@ func NewUnfinishTaskUseCase(
 	}
 }
 
-func (uc *UnfinishTaskUseCase) Exec(ctx context.Context, taskID string, userID string) *errors.Error {
+func (uc *UnfinishTaskUseCase) Exec(ctx context.Context, taskID string) *errors.Error {
 	errCtx := "error unfinishing the task owner"
 
 	task, err := uc.taskRepository.GetOneByID(ctx, taskID)

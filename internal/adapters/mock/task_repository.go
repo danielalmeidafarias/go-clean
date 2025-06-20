@@ -47,7 +47,7 @@ func NewTaskRepository() *TaskRepository {
 				Id:          "f708a6e5-ae4b-452a-924f-63d2dac91a57",
 				Name:        "Task 5",
 				Description: "Description Task 5",
-				Done:        false,
+				Done:        true,
 				UserId:      "b29630ce-d1a7-4627-8f37-c920a2a92872",
 			},
 		},
