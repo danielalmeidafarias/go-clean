@@ -88,7 +88,7 @@ func TestUpdateUserUseCase_Success(t *testing.T) {
 	if err != nil {
 		t.Fatalf("expected no error, got %v", err)
 	}
-	user, _ := repo.GetOneById(ctx, "88cc4b04-02d0-4282-9b89-91fda89e56f0")
+	user, _ := repo.GetOneByID(ctx, "88cc4b04-02d0-4282-9b89-91fda89e56f0")
 	if user.Name != newName || user.Email != newEmail {
 		t.Fatalf("expected updated user, got %v", user)
 	}

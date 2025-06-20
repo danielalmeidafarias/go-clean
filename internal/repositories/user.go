@@ -9,7 +9,7 @@ import (
 
 type UserRepository interface {
 	Create(ctx context.Context, name, email string) (*domain.User, *errors.Error)
-	GetOneById(ctx context.Context, id string) (*domain.User, *errors.Error)
+	GetOneByID(ctx context.Context, id string) (*domain.User, *errors.Error)
 	GetOneByEmail(ctx context.Context, email string) (*domain.User, *errors.Error)
 	GetAll(ctx context.Context) ([]*domain.User, *errors.Error)
 	Update(ctx context.Context, id string, name, email *string) *errors.Error

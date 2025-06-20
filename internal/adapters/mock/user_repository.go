@@ -35,7 +35,7 @@ func NewUserRepository() *UserRepository {
 		},
 	}
 }
-func (r *UserRepository) GetOneById(ctx context.Context, id string) (*domain.User, *errors.Error) {
+func (r *UserRepository) GetOneByID(ctx context.Context, id string) (*domain.User, *errors.Error) {
 	for _, user := range r.users {
 		if user.Id == id {
 			return user, nil
@@ -77,7 +77,7 @@ func (r *UserRepository) GetAll(ctx context.Context) ([]*domain.User, *errors.Er
 }
 
 func (r *UserRepository) Update(ctx context.Context, id string, name, email *string) *errors.Error {
-	user, err := r.GetOneById(ctx, id)
+	user, err := r.GetOneByID(ctx, id)
 	if err != nil {
 		return err
 	}
@@ -93,7 +93,7 @@ func (r *UserRepository) Update(ctx context.Context, id string, name, email *str
 }
 
 func (r *UserRepository) Delete(ctx context.Context, id string) *errors.Error {
-	if _, err := r.GetOneById(ctx, id); err != nil {
+	if _, err := r.GetOneByID(ctx, id); err != nil {
 		return err
 	}
 

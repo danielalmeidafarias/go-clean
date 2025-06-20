@@ -14,7 +14,7 @@ type DeleteUserUseCase struct {
 func (uc *DeleteUserUseCase) Exec(ctx context.Context, id string) *errors.Error {
 	errCtx := "erro removing the user"
 
-	_, err := uc.userRepository.GetOneById(ctx, id)
+	_, err := uc.userRepository.GetOneByID(ctx, id)
 	if err != nil {
 		return err.WithContext(errCtx)
 	}
