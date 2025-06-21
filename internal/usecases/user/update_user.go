@@ -11,6 +11,12 @@ type UpdateUserUseCase struct {
 	userRepository repositories.UserRepository
 }
 
+func NewUpdateUserUseCase(userRepository repositories.UserRepository) *UpdateUserUseCase {
+	return &UpdateUserUseCase{
+		userRepository: userRepository,
+	}
+}
+
 func (uc *UpdateUserUseCase) Exec(ctx context.Context, id string, name, email *string) *errors.Error {
 	errCtx := "erros updating the user"
 

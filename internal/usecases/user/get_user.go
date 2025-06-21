@@ -12,6 +12,12 @@ type GetUserUseCase struct {
 	userRepository repositories.UserRepository
 }
 
+func NewGetUserUseCase(userRepository repositories.UserRepository) *GetUserUseCase {
+	return &GetUserUseCase{
+		userRepository: userRepository,
+	}
+}
+
 func (uc *GetUserUseCase) Exec(ctx context.Context, id string) (*domain.User, *errors.Error) {
 	errCtx := "error getting the user"
 

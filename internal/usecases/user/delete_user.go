@@ -11,6 +11,12 @@ type DeleteUserUseCase struct {
 	userRepository repositories.UserRepository
 }
 
+func NewDeleteUserUseCase(userRepository repositories.UserRepository) *DeleteUserUseCase {
+	return &DeleteUserUseCase{
+		userRepository: userRepository,
+	}
+}
+
 func (uc *DeleteUserUseCase) Exec(ctx context.Context, id string) *errors.Error {
 	errCtx := "erro removing the user"
 
