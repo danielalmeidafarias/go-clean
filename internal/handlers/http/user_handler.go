@@ -40,16 +40,18 @@ func (h *UserHandler) RegisterRoutes(app *fiber.App) {
 }
 
 func (h *UserHandler) GetUser(c *fiber.Ctx) {
-	userID := c.Query("id")
+	params := GetUserDTO{
+		Id: c.Query("id"),
+	}
 
-	if err := h.validate.Var(userID, "required,uuid"); err != nil {
-		c.Status(400).JSON(ValidationError(err))
+	if err := h.validate.Struct(params); err != nil {
+		validationError(c, err)
 		return
 	}
 
-	user, err := h.getUserUseCase.Exec(c.Context(), userID)
+	user, err := h.getUserUseCase.Exec(c.Context(), params.Id)
 	if err != nil {
-		c.Status(HttpStatusCode[err.Code]).JSON(err)
+		useCaseError(c, err)
 		return
 	}
 
@@ -57,10 +59,65 @@ func (h *UserHandler) GetUser(c *fiber.Ctx) {
 }
 
 func (h *UserHandler) CreateUser(c *fiber.Ctx) {
+	var body CreateUserDTO
+
+	if err := c.BodyParser(body); err != nil {
+		invalidRequestBody(c)
+		return
+	}
+
+	if err := h.validate.Struct(body); err != nil {
+		validationError(c, err)
+		return
+	}
+
+	user, err := h.createUserUseCase.Exec(c.Context(), body.Name, body.Email)
+	if err != nil {
+		useCaseError(c, err)
+		return
+	}
+
+	c.Status(201).JSON(user)
 }
 
 func (h *UserHandler) UpdateUser(c *fiber.Ctx) {
+	var body UpdateUserDTO
+
+	if err := c.BodyParser(body); err != nil {
+		invalidRequestBody(c)
+		return
+	}
+
+	id := c.Params("id")
+	body.Id = id
+
+	if err := h.validate.Struct(body); err != nil {
+		validationError(c, err)
+		return
+	}
+
+	if err := h.updateUserUseCase.Exec(c.Context(), body.Id, body.Name, body.Email); err != nil {
+		useCaseError(c, err)
+		return
+	}
+
+	c.SendStatus(200)
 }
 
 func (h *UserHandler) DeleteUser(c *fiber.Ctx) {
+	params := DeleteUserDTO{
+		Id: c.Params("id"),
+	}
+
+	if err := h.validate.Struct(params); err != nil {
+		validationError(c, err)
+		return
+	}
+
+	if err := h.deleteUserUseCase.Exec(c.Context(), params.Id); err != nil {
+		useCaseError(c, err)
+		return
+	}
+
+	c.SendStatus(200)
 }
